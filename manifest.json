@@ -1,0 +1,16 @@
+{
+  "name": "Inventaris Pondok Ar Rohman",
+  "short_name": "Inventaris",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#3B0718",
+  "theme_color": "#3B0718",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://drive.google.com/thumbnail?id=1erjNngfDxUenNx5-cZ9_A4Wa1Pi8opYT&sz=w512",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
