@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventaris Pondok Putra & Putri - Ar Rohman Tegalrejo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --maroon-deep: #3B0718;
+      --maroon-royal: #6B122E;
+      --maroon-rich: #881337;
+      --gold: #F59E0B;
+      --gold-bright: #FCD34D;
+      --gold-soft: #FEF3C7;
+      --white: #FFFFFF;
+      --text-main: #1E1418;
+      --text-muted: #64748B;
+      --success: #059669;
+      --danger: #E11D48;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #F5E6EC 0%, #FAF5F7 40%, #F3ECEF 100%);
+      color: var(--text-main);
+      padding-bottom: 60px;
+    }
+
+    /* ================= BANNER 3 LOGO LEMBAGA ================= */
+    .logo-trilogy-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1.5px solid rgba(252, 211, 77, 0.85);
+      border-radius: 16px;
+      padding: 8px 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+      width: 100%;
+    }
+
+    .logo-trilogy-bar.lock-logos {
+      max-width: 340px;
+      margin-bottom: 14px;
+    }
+
+    .logo-trilogy-bar.header-logos {
+      margin-bottom: 12px;
+    }
+
+    .logo-item {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 42px;
+      min-width: 0;
+    }
+
+    .logo-item img {
+      max-height: 40px;
+      max-width: 100%;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .logo-divider {
+      width: 1px;
+      height: 28px;
+      background: #CBD5E1;
+      flex-shrink: 0;
+    }
+
+    /* ================= PIN LOCK SCREEN ================= */
+    .lock-screen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top right, #881337 0%, #4A0E24 55%, #2A0613 100%);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      color: var(--white);
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      overflow-y: auto;
+    }
+
+    .lock-screen.unlocked {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .lock-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--gold-bright);
+      text-align: center;
+    }
+
+    .lock-subtitle {
+      font-size: 12px;
+      color: #FBCFE8;
+      margin-top: 3px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .pin-dots {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .pin-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-bright);
+      background: transparent;
+      transition: all 0.2s ease;
+    }
+
+    .pin-dot.filled {
+      background: var(--gold-bright);
+      box-shadow: 0 0 12px rgba(252, 211, 77, 0.8);
+      transform: scale(1.15);
+    }
+
+    .pin-dot.error {
+      border-color: #FB7185;
+      background: #FB7185;
+      animation: shake 0.35s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    .numpad-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 64px);
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .num-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(252, 211, 77, 0.35);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--white);
+      font-size: 21px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .num-btn:active {
+      transform: scale(0.92);
+      background: rgba(252, 211, 77, 0.28);
+    }
+
+    .num-btn.action-btn {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--gold-bright);
+      border-color: transparent;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    /* ================= PILIH PONDOK PUTRA / PUTRI ================= */
+    .scope-screen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top right, #881337 0%, #4A0E24 55%, #2A0613 100%);
+      z-index: 1800;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      color: var(--white);
+      overflow-y: auto;
+    }
+
+    .scope-screen.visible {
+      display: flex;
+    }
+
+    .scope-grid {
+      width: 100%;
+      max-width: 340px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .scope-card-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1.5px solid var(--gold-bright);
+      border-radius: 18px;
+      padding: 20px 12px;
+      color: var(--white);
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .scope-card-btn:active {
+      transform: scale(0.96);
+      background: rgba(252, 211, 77, 0.22);
+    }
+
+    .scope-card-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--gold-bright);
+      margin-bottom: 4px;
+    }
+
+    .scope-card-sub {
+      font-size: 11.5px;
+      color: #FBCFE8;
+    }
+
+    /* ================= HEADER ================= */
+    .exam-header {
+      background: linear-gradient(135deg, #3B0718 0%, #6B122E 52%, #881337 100%);
+      color: var(--white);
+      padding: 16px 16px 24px;
+      border-bottom-left-radius: 26px;
+      border-bottom-right-radius: 26px;
+      box-shadow: 0 12px 28px rgba(59, 7, 24, 0.25);
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .header-inner {
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .header-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .exam-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.28), rgba(252, 211, 77, 0.14));
+      border: 1px solid rgba(252, 211, 77, 0.6);
+      color: var(--gold-soft);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 5px 11px;
+      border-radius: 99px;
+    }
+
+    .top-btn-group {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-lock-app {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: var(--gold-soft);
+      padding: 5px 10px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .header-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-title-row h1 {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      line-height: 1.25;
+    }
+
+    .header-sub {
+      font-size: 11.5px;
+      color: var(--gold-soft);
+      margin-top: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-add-santri-top {
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(252, 211, 77, 0.5);
+      color: var(--gold-bright);
+      padding: 8px 10px;
+      border-radius: 11px;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-refresh {
+      background: linear-gradient(135deg, var(--gold), #D97706);
+      border: none;
+      color: #3B0718;
+      padding: 8px 11px;
+      border-radius: 11px;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+    }
+
+    /* ================= HEADER KHUSUS PRINT PDF ================= */
+    .print-doc-header {
+      display: none;
+    }
+
+    /* ================= MAIN CONTAINER & CARDS ================= */
+    .container {
+      width: 100%;
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 14px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 15px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(226, 200, 210, 0.85);
+      box-shadow: 0 6px 20px rgba(59, 7, 24, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3.5px;
+      background: linear-gradient(90deg, #3B0718, #881337, #F59E0B);
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #6B122E;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 5px;
+    }
+
+    .field-hint {
+      font-size: 11px;
+      color: #881337;
+      font-weight: 600;
+      margin-top: 5px;
+    }
+
+    select, input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 11px 13px;
+      border-radius: 12px;
+      border: 1.5px solid #D8C2CB;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-main);
+      background-color: #FFF9FB;
+      outline: none;
+    }
+
+    select:focus, input[type="text"]:focus, input[type="number"]:focus {
+      border-color: #881337;
+      background-color: var(--white);
+      box-shadow: 0 0 0 3px rgba(136, 19, 55, 0.12);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    /* ================= TOMBOL KAMERA & GALERI ================= */
+    .foto-box {
+      background: linear-gradient(145deg, #FFF5F8, #FDE8EF);
+      border: 1.5px dashed #881337;
+      border-radius: 15px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+
+    .foto-btn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .btn-cam-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 11px 10px;
+      border-radius: 11px;
+      border: none;
+      background: linear-gradient(135deg, #6B122E, #881337);
+      color: var(--gold-bright);
+      font-size: 12.5px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .btn-galeri-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 11px 10px;
+      border-radius: 11px;
+      border: 1.5px solid #881337;
+      background: #FFFFFF;
+      color: #6B122E;
+      font-size: 12.5px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .foto-preview-img {
+      display: none;
+      margin-top: 10px;
+      max-height: 170px;
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1.5px solid #D8C2CB;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 13px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #3B0718 0%, #6B122E 50%, #881337 100%);
+      color: var(--gold-bright);
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 12px;
+      box-shadow: 0 8px 20px rgba(59, 7, 24, 0.25);
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 11px;
+      border-radius: 12px;
+      border: 1.5px solid #D8C2CB;
+      background: #F8FAFC;
+      color: #4A0E24;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    /* ================= KPI BISA DIKLIK ================= */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .stat-box {
+      padding: 11px 8px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #FFF5F8, #FCE7F3);
+      border: 1.5px solid #FBCFE8;
+      cursor: pointer;
+    }
+
+    .stat-box.active-filter {
+      box-shadow: 0 0 0 2.5px var(--gold);
+    }
+
+    .stat-box.hadir {
+      background: linear-gradient(135deg, #ECFDF5, #D1FAE5);
+      border-color: #A7F3D0;
+    }
+
+    .stat-box.warn {
+      background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+      border-color: #FDE68A;
+    }
+
+    .stat-box.absen {
+      background: linear-gradient(135deg, #FFF1F2, #FFE4E6);
+      border-color: #FECDD3;
+    }
+
+    .stat-box .num {
+      font-size: 20px;
+      font-weight: 800;
+      color: #6B122E;
+    }
+
+    .stat-box.hadir .num { color: #047857; }
+    .stat-box.warn .num { color: #B45309; }
+    .stat-box.absen .num { color: #BE123C; }
+
+    .stat-box .lbl {
+      font-size: 11px;
+      color: #475569;
+      font-weight: 700;
+    }
+
+    .filter-pill-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 0 10px;
+      gap: 8px;
+    }
+
+    .filter-pill {
+      font-size: 11px;
+      font-weight: 800;
+      color: #6B122E;
+      background: #FDF2F8;
+      border: 1px solid #FBCFE8;
+      padding: 4px 10px;
+      border-radius: 99px;
+    }
+
+    /* ================= DAFTAR BARANG ================= */
+    .inv-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .inv-card {
+      background: linear-gradient(145deg, #FFFFFF, #FFF9FB);
+      border: 1.5px solid #E2CBD4;
+      border-radius: 15px;
+      padding: 12px;
+    }
+
+    .inv-code {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #6B122E;
+      background: #FCE7F3;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-bottom: 4px;
+    }
+
+    .inv-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .inv-meta {
+      font-size: 11.5px;
+      color: #475569;
+      line-height: 1.45;
+      margin-bottom: 8px;
+    }
+
+    .inv-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 9px;
+    }
+
+    .mini-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 8px;
+      background: #F1F5F9;
+      color: #1E293B;
+    }
+
+    .mini-badge.ok { background: #D1FAE5; color: #065F46; }
+    .mini-badge.rr { background: #FEF3C7; color: #92400E; }
+    .mini-badge.rb { background: #FFE4E6; color: #9F1239; }
+
+    .inv-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .btn-item-act {
+      padding: 6px 10px;
+      border-radius: 9px;
+      border: 1px solid #CBD5E1;
+      background: #FFFFFF;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #1E293B;
+    }
+
+    .btn-item-act.foto {
+      background: #FEF3C7;
+      border-color: #F59E0B;
+      color: #92400E;
+    }
+
+    .btn-item-act.del {
+      background: #FFF1F2;
+      border-color: #FDA4AF;
+      color: #BE123C;
+    }
+
+    .print-table-wrap {
+      display: none;
+    }
+
+    /* ================= FOOTER AUTHOR ================= */
+    .app-footer-author {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748B;
+      padding: 6px 12px 18px;
+      letter-spacing: 0.2px;
+    }
+
+    .app-footer-author span {
+      color: #6B122E;
+      font-weight: 700;
+    }
+
+    /* ================= MODAL FOTO, LOADER, TOAST ================= */
+    .foto-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.78);
+      z-index: 2600;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .foto-modal.open {
+      display: flex;
+    }
+
+    .foto-modal-card {
+      background: #FFFFFF;
+      border-radius: 18px;
+      max-width: 440px;
+      width: 100%;
+      padding: 14px;
+    }
+
+    .foto-modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+
+    .foto-modal-img {
+      width: 100%;
+      max-height: 65vh;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    .loader-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(59, 7, 24, 0.88);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      z-index: 2500;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3.5px solid rgba(252, 211, 77, 0.25);
+      border-top-color: var(--gold-bright);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 10px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #3B0718, #881337);
+      color: var(--gold-bright);
+      border: 1px solid var(--gold-bright);
+      padding: 11px 18px;
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 700;
+      z-index: 3000;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      display: none;
+    }
+
+    /* ================= PRINT PDF (LOGO PENGASUHAN SAJA, TANPA FOTO) ================= */
+    @media print {
+      body {
+        background: #FFFFFF !important;
+        padding-bottom: 0 !important;
+      }
+      .lock-screen,
+      .scope-screen,
+      .exam-header,
+      .no-print,
+      .inv-list,
+      .foto-modal,
+      .loader-overlay,
+      .toast {
+        display: none !important;
+      }
+      .print-doc-header {
+        display: flex !important;
+        align-items: center;
+        gap: 14px;
+        border-bottom: 2px solid #000000;
+        padding-bottom: 10px;
+        margin-bottom: 14px;
+      }
+      .print-doc-header img {
+        height: 56px;
+        width: auto;
+        object-fit: contain;
+      }
+      .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
+      .card {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+      }
+      .card::before {
+        display: none !important;
+      }
+      .print-table-wrap {
+        display: block !important;
+      }
+      .print-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 11.5px;
+      }
+      .print-table th,
+      .print-table td {
+        border: 1px solid #334155;
+        padding: 6px 8px;
+        text-align: left;
+      }
+      .print-table th {
+        background: #F1F5F9 !important;
+        font-weight: 800;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. LAYAR KUNCI PIN (0000) -->
+  <div id="lockScreen" class="lock-screen">
+    <div class="logo-trilogy-bar lock-logos">
+      <div class="logo-item">
+        <img src="https://drive.google.com/thumbnail?id=1erjNngfDxUenNx5-cZ9_A4Wa1Pi8opYT&sz=w600" alt="Pondok Pesantren Ar-Rohman Tegalrejo">
+      </div>
+      <div class="logo-divider"></div>
+      <div class="logo-item">
+        <img src="https://drive.google.com/thumbnail?id=1WLFTf2kO2it7wHKfe2ycOIlV1hyLWRq8&sz=w600" alt="Pengasuhan Santri">
+      </div>
+      <div class="logo-divider"></div>
+      <div class="logo-item">
+        <img src="https://drive.google.com/thumbnail?id=13L_3algwKL1xAdZX0EYmmAjeHCBX6wFF&sz=w600" alt="Madrasah Diniyyah">
+      </div>
+    </div>
+
+    <div class="lock-title">Gerbang Inventaris Pondok</div>
+    <div class="lock-subtitle">Masukkan Sandi 4 Digit untuk Masuk</div>
+
+    <div class="pin-dots" id="pinDots">
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+    </div>
+
+    <div class="numpad-grid">
+      <button type="button" class="num-btn" onclick="pressPin('1')">1</button>
+      <button type="button" class="num-btn" onclick="pressPin('2')">2</button>
+      <button type="button" class="num-btn" onclick="pressPin('3')">3</button>
+      <button type="button" class="num-btn" onclick="pressPin('4')">4</button>
+      <button type="button" class="num-btn" onclick="pressPin('5')">5</button>
+      <button type="button" class="num-btn" onclick="pressPin('6')">6</button>
+      <button type="button" class="num-btn" onclick="pressPin('7')">7</button>
+      <button type="button" class="num-btn" onclick="pressPin('8')">8</button>
+      <button type="button" class="num-btn" onclick="pressPin('9')">9</button>
+      <button type="button" class="num-btn action-btn" onclick="clearPin()">Reset</button>
+      <button type="button" class="num-btn" onclick="pressPin('0')">0</button>
+      <button type="button" class="num-btn action-btn" onclick="backspacePin()">Hapus</button>
+    </div>
+  </div>
+
+  <!-- 2. PILIH PONDOK PUTRA / PUTRI -->
+  <div id="scopeScreen" class="scope-screen">
+    <div class="logo-trilogy-bar lock-logos">
+      <div class="logo-item">
+        <img src="https://drive.google.com/thumbnail?id=1erjNngfDxUenNx5-cZ9_A4Wa1Pi8opYT&sz=w600" alt="Pondok Pesantren Ar-Rohman Tegalrejo">
+      </div>
+      <div class="logo-divider"></div>
+      <div class="logo-item">
+        <img src="https://drive.google.com/thumbnail?id=1WLFTf2kO2it7wHKfe2ycOIlV1hyLWRq8&sz=w600" alt="Pengasuhan Santri">
+      </div>
+      <div class="logo-divider"></div>
+      <div class="logo-item">
+        <img src="https://drive.google.com/thumbnail?id=13L_3algwKL1xAdZX0EYmmAjeHCBX6wFF&sz=w600" alt="Madrasah Diniyyah">
+      </div>
+    </div>
+
+    <div class="lock-title">Pilih Lingkup Inventaris</div>
+    <div class="lock-subtitle">Pilih data inventaris pondok yang akan dikelola</div>
+
+    <div class="scope-grid">
+      <button type="button" class="scope-card-btn" onclick="pilihPondok('Putra')">
+        <div class="scope-card-title">Pondok Putra</div>
+        <div class="scope-card-sub">Inventaris Putra</div>
+      </button>
+      <button type="button" class="scope-card-btn" onclick="pilihPondok('Putri')">
+        <div class="scope-card-title">Pondok Putri</div>
+        <div class="scope-card-sub">Inventaris Putri</div>
+      </button>
+    </div>
+  </div>
+
+  <div id="loader" class="loader-overlay">
+    <div class="spinner"></div>
+    <div id="loaderText">Memuat data inventaris...</div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <!-- MODAL LIHAT FOTO -->
+  <div id="fotoModal" class="foto-modal" onclick="tutupModalFoto()">
+    <div class="foto-modal-card" onclick="event.stopPropagation()">
+      <div class="foto-modal-head">
+        <strong id="fotoModalTitle" style="font-size:14px;">Dokumentasi Foto</strong>
+        <button type="button" class="btn-item-act" onclick="tutupModalFoto()">Tutup</button>
+      </div>
+      <img id="fotoModalImg" class="foto-modal-img" alt="Foto Barang">
+    </div>
+  </div>
+
+  <!-- HEADER UTAMA -->
+  <header class="exam-header">
+    <div class="header-inner">
+      <div class="logo-trilogy-bar header-logos">
+        <div class="logo-item">
+          <img src="https://drive.google.com/thumbnail?id=1erjNngfDxUenNx5-cZ9_A4Wa1Pi8opYT&sz=w600" alt="Pondok Pesantren Ar-Rohman Tegalrejo">
+        </div>
+        <div class="logo-divider"></div>
+        <div class="logo-item">
+          <img src="https://drive.google.com/thumbnail?id=1WLFTf2kO2it7wHKfe2ycOIlV1hyLWRq8&sz=w600" alt="Pengasuhan Santri">
+        </div>
+        <div class="logo-divider"></div>
+        <div class="logo-item">
+          <img src="https://drive.google.com/thumbnail?id=13L_3algwKL1xAdZX0EYmmAjeHCBX6wFF&sz=w600" alt="Madrasah Diniyyah">
+        </div>
+      </div>
+
+      <div class="header-top-bar">
+        <div class="exam-badge" id="badgePondok">Inventaris &bull; Pondok Putra</div>
+        <div class="top-btn-group">
+          <button type="button" class="btn-lock-app" onclick="bukaPilihanPondok()">Putra/Putri</button>
+          <button type="button" class="btn-lock-app" onclick="lockApp()">Kunci</button>
+        </div>
+      </div>
+
+      <div class="header-title-row">
+        <div>
+          <h1 id="judulUtama">Inventaris Pondok Putra</h1>
+          <div class="header-sub">Pondok Pesantren Ar Rohman Tegalrejo</div>
+        </div>
+        <div class="header-actions">
+          <button type="button" class="btn-add-santri-top" onclick="cetakPDF()">Cetak PDF</button>
+          <button type="button" class="btn-refresh" onclick="muatData()">Sinkron</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HEADER KHUSUS CETAK PDF (LOGO PENGASUHAN SANTRI SAJA) -->
+    <div class="print-doc-header">
+      <img src="https://drive.google.com/thumbnail?id=1WLFTf2kO2it7wHKfe2ycOIlV1hyLWRq8&sz=w600" alt="Logo Pengasuhan Santri">
+      <div>
+        <div style="font-size:15px; font-weight:800;" id="printDocTitle">LAPORAN DATA INVENTARIS — PONDOK PUTRA</div>
+        <div style="font-size:11.5px; color:#334155;" id="printDocDate"></div>
+      </div>
+    </div>
+
+    <!-- 1. INPUT BARANG INVENTARIS -->
+    <section class="card no-print">
+      <div class="section-label">
+        <span>1. Input Barang Inventaris</span>
+      </div>
+
+      <div class="form-group">
+        <label>Kode Barang</label>
+        <input type="text" id="kodeBarang" placeholder="Otomatis oleh sistem">
+        <div class="field-hint" id="kodeAutoInfo">Dikosongkan = diisi otomatis oleh sistem</div>
+      </div>
+
+      <div class="form-group">
+        <label>Nama Barang</label>
+        <input type="text" id="namaBarang" placeholder="Ketik nama barang...">
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px;">Kategori</label>
+          <select id="kategoriBarang">
+            <option value="Meubelair">Meubelair</option>
+            <option value="Fasilitas Kamar">Fasilitas Kamar</option>
+            <option value="Elektronik">Elektronik</option>
+            <option value="Perlengkapan">Perlengkapan</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px;">Lokasi / Ruang</label>
+          <input type="text" id="lokasiBarang" placeholder="Asrama / Kelas">
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px;">Kondisi Baik</label>
+          <input type="number" id="kondisiBaik" min="0" value="1" oninput="sinkronTotalOtomatis()">
+        </div>
+        <div>
+          <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px;">Rusak Ringan</label>
+          <input type="number" id="rusakRingan" min="0" value="0" oninput="sinkronTotalOtomatis()">
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px;">Rusak Berat</label>
+          <input type="number" id="rusakBerat" min="0" value="0" oninput="sinkronTotalOtomatis()">
+        </div>
+        <div>
+          <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px;">Jumlah Total</label>
+          <input type="number" id="jumlahTotal" min="0" value="1">
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px;">Satuan</label>
+          <select id="satuanSelect" onchange="toggleSatuanCustom()">
+            <option value="Unit">Unit</option>
+            <option value="Buah">Buah</option>
+            <option value="Set">Set</option>
+            <option value="Lembar">Lembar</option>
+            <option value="Pasang">Pasang</option>
+            <option value="Roll">Roll</option>
+            <option value="Box/Dus">Box/Dus</option>
+            <option value="Meter">Meter</option>
+            <option value="Paket">Paket</option>
+            <option value="Lusin">Lusin</option>
+            <option value="Lainnya">Lainnya (Ketik)</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px;">Sumber / Tahun</label>
+          <input type="text" id="sumberTahun" placeholder="Opsional">
+        </div>
+      </div>
+
+      <div class="form-group" id="satuanCustomWrap" style="display:none;">
+        <label>Tulis Satuan Sendiri</label>
+        <input type="text" id="satuanCustom" placeholder="Contoh: Rim, Batang, Karung...">
+      </div>
+
+      <div class="form-group">
+        <label>Keterangan (Opsional)</label>
+        <input type="text" id="keteranganBarang" placeholder="Catatan tambahan...">
+      </div>
+
+      <!-- DOKUMENTASI FOTO: AMBIL DARI KAMERA ATAU GALERI -->
+      <div class="foto-box">
+        <label style="font-size:12px; font-weight:700; display:block; margin-bottom:4px; color:#6B122E;">
+          Dokumentasi Foto Barang (Tidak Ikut Tercetak ke PDF)
+        </label>
+
+        <input type="file" id="fotoKameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handleFotoFile(event)">
+        <input type="file" id="fotoGaleriInput" accept="image/*" style="display:none;" onchange="handleFotoFile(event)">
+
+        <div class="foto-btn-grid">
+          <button type="button" class="btn-cam-trigger" onclick="bukaKameraLangsung()">
+            Ambil dari Kamera
+          </button>
+          <button type="button" class="btn-galeri-trigger" onclick="bukaGaleriFoto()">
+            Pilih dari Galeri
+          </button>
+        </div>
+
+        <div class="field-hint" id="fotoInfoHint">Otomatis dikompres agar muat di sel Google Sheets.</div>
+        <img id="fotoPreview" class="foto-preview-img" alt="Preview Foto">
+        <div id="fotoRemoveWrap" style="display:none; margin-top:8px;">
+          <button type="button" class="btn-item-act del" onclick="hapusFoto()">Hapus Foto</button>
+        </div>
+      </div>
+
+      <button type="button" class="btn-primary" onclick="simpanBarang()">
+        Simpan Barang Inventaris
+      </button>
+      <button type="button" class="btn-secondary" onclick="resetFormBarang()">
+        Reset Form
+      </button>
+    </section>
+
+    <!-- 2. REKAP & DAFTAR BARANG INVENTARIS -->
+    <section class="card">
+      <div class="section-label">
+        <span id="rekapSectionTitle">2. Rekap Inventaris Pondok Putra</span>
+      </div>
+
+      <div class="stats-bar no-print">
+        <div class="stat-box active-filter" id="kpiBtnAll" onclick="setFilterKondisi('all')">
+          <div class="num" id="kpiJenis">0</div>
+          <div class="lbl">Semua Item</div>
+        </div>
+        <div class="stat-box hadir" id="kpiBtnBaik" onclick="setFilterKondisi('baik')">
+          <div class="num" id="kpiBaik">0</div>
+          <div class="lbl">Baik</div>
+        </div>
+        <div class="stat-box warn" id="kpiBtnRingan" onclick="setFilterKondisi('ringan')">
+          <div class="num" id="kpiRingan">0</div>
+          <div class="lbl">Rusak Ringan</div>
+        </div>
+        <div class="stat-box absen" id="kpiBtnBerat" onclick="setFilterKondisi('berat')">
+          <div class="num" id="kpiBerat">0</div>
+          <div class="lbl">Rusak Berat</div>
+        </div>
+      </div>
+
+      <div class="no-print">
+        <input type="text" id="searchNamaBarang" placeholder="Cari nama barang, kode, atau lokasi..." oninput="renderInventaris()">
+        <div class="filter-pill-row">
+          <span class="filter-pill" id="filterStatusLabel">Filter: Semua Item</span>
+          <span style="font-size:11px; color:var(--text-muted);" id="countShownLabel">0 barang</span>
+        </div>
+      </div>
+
+      <!-- TAMPILAN KARTU DI LAYAR HP -->
+      <div id="invCardList" class="inv-list"></div>
+
+      <!-- TAMPILAN TABEL KHUSUS CETAK PDF (TANPA FOTO) -->
+      <div class="print-table-wrap">
+        <table class="print-table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Kode</th>
+              <th>Nama Barang</th>
+              <th>Kategori</th>
+              <th>Lokasi</th>
+              <th>Total</th>
+              <th>Baik</th>
+              <th>RR</th>
+              <th>RB</th>
+              <th>Sumber/Tahun</th>
+              <th>Keterangan</th>
+            </tr>
+          </thead>
+          <tbody id="printTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="app-footer-author no-print">
+      Sistem Inventaris Pondok &bull; Dikembangkan oleh <span>Sururi Al Faruq</span>
+    </footer>
+  </main>
+
+  <script>
+    const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwmVrIEftwGUIwkue8AxhDs3e3w2-qoh1jDJfsZ3Ch4mpuuVX9SGvrudrK1IfmLlkx9/exec';
+    const APP_PIN = '0000';
+    const SATUAN_LIST = ['Unit', 'Buah', 'Set', 'Lembar', 'Pasang', 'Roll', 'Box/Dus', 'Meter', 'Paket', 'Lusin'];
+    const MAX_SHEET_CELL_CHARS = 45000;
+
+    let enteredPin = '';
+    let currentPondok = 'Putra';
+    let nextKodeOtomatis = '';
+    let itemsData = [];
+    let filterKondisi = 'all';
+    let fotoBase64 = '';
+
+    window.onload = function() {
+      if (sessionStorage.getItem('inv_pondok_unlocked') === '1') {
+        document.getElementById('lockScreen').classList.add('unlocked');
+        const savedPondok = sessionStorage.getItem('inv_pondok_scope');
+        if (savedPondok === 'Putra' || savedPondok === 'Putri') {
+          pilihPondok(savedPondok);
+        } else {
+          bukaPilihanPondok();
+        }
+      }
+    };
+
+    function updatePinDots(isError) {
+      document.querySelectorAll('#pinDots .pin-dot').forEach(function(dot, idx) {
+        dot.classList.remove('error');
+        dot.classList.toggle('filled', idx < enteredPin.length);
+        if (isError) dot.classList.add('error');
+      });
+    }
+
+    function pressPin(digit) {
+      if (enteredPin.length >= 4) return;
+      enteredPin += digit;
+      updatePinDots(false);
+
+      if (enteredPin.length === 4) {
+        if (enteredPin === APP_PIN) {
+          sessionStorage.setItem('inv_pondok_unlocked', '1');
+          setTimeout(function() {
+            enteredPin = '';
+            updatePinDots(false);
+            document.getElementById('lockScreen').classList.add('unlocked');
+            bukaPilihanPondok();
+          }, 150);
+        } else {
+          updatePinDots(true);
+          showToast('Sandi salah! Coba lagi.');
+          setTimeout(function() {
+            enteredPin = '';
+            updatePinDots(false);
+          }, 450);
+        }
+      }
+    }
+
+    function backspacePin() {
+      enteredPin = enteredPin.slice(0, -1);
+      updatePinDots(false);
+    }
+
+    function clearPin() {
+      enteredPin = '';
+      updatePinDots(false);
+    }
+
+    function lockApp() {
+      sessionStorage.removeItem('inv_pondok_unlocked');
+      enteredPin = '';
+      updatePinDots(false);
+      document.getElementById('scopeScreen').classList.remove('visible');
+      document.getElementById('lockScreen').classList.remove('unlocked');
+    }
+
+    function bukaPilihanPondok() {
+      document.getElementById('scopeScreen').classList.add('visible');
+    }
+
+    function pilihPondok(pondok) {
+      currentPondok = pondok === 'Putri' ? 'Putri' : 'Putra';
+      sessionStorage.setItem('inv_pondok_scope', currentPondok);
+      filterKondisi = 'all';
+      document.getElementById('searchNamaBarang').value = '';
+      document.getElementById('scopeScreen').classList.remove('visible');
+      applyPondokLabels();
+      resetFormBarang();
+      muatData();
+    }
+
+    function applyPondokLabels() {
+      const labelPondok = 'Pondok ' + currentPondok;
+      const tglStr = new Date().toLocaleDateString('id-ID', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+      });
+
+      document.getElementById('badgePondok').innerHTML = 'Inventaris &bull; ' + labelPondok;
+      document.getElementById('judulUtama').innerText = 'Inventaris ' + labelPondok;
+      document.getElementById('rekapSectionTitle').innerText = '2. Rekap Inventaris ' + labelPondok;
+      document.getElementById('printDocTitle').innerText = 'LAPORAN DATA INVENTARIS — PONDOK ' + currentPondok.toUpperCase();
+      document.getElementById('printDocDate').innerText = 'Pengasuhan Santri • Pondok Pesantren Ar Rohman Tegalrejo • ' + tglStr;
+      updateKodeAutoHint();
+    }
+
+    function updateKodeAutoHint() {
+      const contoh = nextKodeOtomatis || (currentPondok === 'Putri' ? 'INV-PI-001' : 'INV-PA-001');
+      document.getElementById('kodeBarang').placeholder = 'Otomatis: ' + contoh;
+      document.getElementById('kodeAutoInfo').innerText = 'Dikosongkan = diisi otomatis oleh sistem (' + contoh + ')';
+    }
+
+    function toggleSatuanCustom() {
+      const sel = document.getElementById('satuanSelect').value;
+      const wrap = document.getElementById('satuanCustomWrap');
+      wrap.style.display = sel === 'Lainnya' ? 'block' : 'none';
+      if (sel !== 'Lainnya') document.getElementById('satuanCustom').value = '';
+    }
+
+    function getSatuanValue() {
+      const sel = document.getElementById('satuanSelect').value;
+      if (sel === 'Lainnya') {
+        return document.getElementById('satuanCustom').value.trim() || 'Unit';
+      }
+      return sel || 'Unit';
+    }
+
+    function setSatuanValue(val) {
+      const clean = String(val || 'Unit').trim();
+      const match = SATUAN_LIST.find(function(s) { return s.toLowerCase() === clean.toLowerCase(); });
+      if (match) {
+        document.getElementById('satuanSelect').value = match;
+        document.getElementById('satuanCustomWrap').style.display = 'none';
+        document.getElementById('satuanCustom').value = '';
+      } else {
+        document.getElementById('satuanSelect').value = 'Lainnya';
+        document.getElementById('satuanCustomWrap').style.display = 'block';
+        document.getElementById('satuanCustom').value = clean;
+      }
+    }
+
+    function sinkronTotalOtomatis() {
+      const b = Math.max(0, Number(document.getElementById('kondisiBaik').value || 0));
+      const rr = Math.max(0, Number(document.getElementById('rusakRingan').value || 0));
+      const rb = Math.max(0, Number(document.getElementById('rusakBerat').value || 0));
+      document.getElementById('jumlahTotal').value = b + rr + rb;
+    }
+
+    /* ================= KAMERA, GALERI & AUTO-KOMPRES < 45.000 KARAKTER ================= */
+    function bukaKameraLangsung() {
+      const camInput = document.getElementById('fotoKameraInput');
+      camInput.value = '';
+      camInput.click();
+    }
+
+    function bukaGaleriFoto() {
+      const galInput = document.getElementById('fotoGaleriInput');
+      galInput.value = '';
+      galInput.click();
+    }
+
+    function compressImageToFitSheet(img) {
+      const steps = [
+        { maxDim: 480, quality: 0.55 },
+        { maxDim: 400, quality: 0.50 },
+        { maxDim: 340, quality: 0.45 },
+        { maxDim: 280, quality: 0.40 },
+        { maxDim: 230, quality: 0.35 },
+        { maxDim: 180, quality: 0.30 }
+      ];
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      let result = '';
+
+      for (let i = 0; i < steps.length; i++) {
+        const s = steps[i];
+        let w = img.width;
+        let h = img.height;
+        const longest = Math.max(w, h);
+        if (longest > s.maxDim) {
+          const ratio = s.maxDim / longest;
+          w = Math.round(w * ratio);
+          h = Math.round(h * ratio);
+        }
+        canvas.width = w;
+        canvas.height = h;
+        ctx.clearRect(0, 0, w, h);
+        ctx.drawImage(img, 0, 0, w, h);
+
+        result = canvas.toDataURL('image/jpeg', s.quality);
+        if (result.length <= MAX_SHEET_CELL_CHARS) {
+          return result;
+        }
+      }
+      return result;
+    }
+
+    function handleFotoFile(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        showToast('Pilih file foto (JPG/PNG)');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const compressed = compressImageToFitSheet(img);
+          if (compressed.length > MAX_SHEET_CELL_CHARS) {
+            showToast('Foto terlalu kompleks, coba ambil ulang.');
+            return;
+          }
+          fotoBase64 = compressed;
+          tampilkanFotoPreview(fotoBase64);
+          document.getElementById('fotoInfoHint').innerText =
+            'Foto siap (' + Math.round(fotoBase64.length / 1000) + ' KB / aman untuk sel Sheets)';
+          showToast('Foto terkompres & siap disimpan');
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function tampilkanFotoPreview(src) {
+      const img = document.getElementById('fotoPreview');
+      const wrap = document.getElementById('fotoRemoveWrap');
+      if (src) {
+        img.src = src;
+        img.style.display = 'block';
+        wrap.style.display = 'block';
+      } else {
+        img.src = '';
+        img.style.display = 'none';
+        wrap.style.display = 'none';
+      }
+    }
+
+    function hapusFoto() {
+      fotoBase64 = '';
+      document.getElementById('fotoKameraInput').value = '';
+      document.getElementById('fotoGaleriInput').value = '';
+      document.getElementById('fotoInfoHint').innerText = 'Otomatis dikompres agar muat di sel Google Sheets.';
+      tampilkanFotoPreview('');
+    }
+
+    function lihatFoto(id) {
+      const item = itemsData.find(function(x) { return x.id === id; });
+      if (!item || !item.fotoBase64) {
+        showToast('Barang ini belum memiliki foto');
+        return;
+      }
+      document.getElementById('fotoModalTitle').innerText = 'Foto: ' + (item.nama || item.kode || 'Barang');
+      document.getElementById('fotoModalImg').src = item.fotoBase64;
+      document.getElementById('fotoModal').classList.add('open');
+    }
+
+    function tutupModalFoto() {
+      document.getElementById('fotoModal').classList.remove('open');
+      document.getElementById('fotoModalImg').src = '';
+    }
+
+    function showLoader(msg) {
+      document.getElementById('loaderText').innerText = msg || 'Memproses...';
+      document.getElementById('loader').style.display = 'flex';
+    }
+
+    function hideLoader() {
+      document.getElementById('loader').style.display = 'none';
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.style.display = 'block';
+      setTimeout(function() { t.style.display = 'none'; }, 2800);
+    }
+
+    function resetFormBarang() {
+      document.getElementById('kodeBarang').value = '';
+      document.getElementById('namaBarang').value = '';
+      document.getElementById('kategoriBarang').value = 'Meubelair';
+      document.getElementById('lokasiBarang').value = '';
+      document.getElementById('kondisiBaik').value = '1';
+      document.getElementById('rusakRingan').value = '0';
+      document.getElementById('rusakBerat').value = '0';
+      document.getElementById('jumlahTotal').value = '1';
+      setSatuanValue('Unit');
+      document.getElementById('sumberTahun').value = '';
+      document.getElementById('keteranganBarang').value = '';
+      document.getElementById('fotoKameraInput').value = '';
+      document.getElementById('fotoGaleriInput').value = '';
+      document.getElementById('fotoInfoHint').innerText = 'Otomatis dikompres agar muat di sel Google Sheets.';
+      fotoBase64 = '';
+      tampilkanFotoPreview('');
+      updateKodeAutoHint();
+    }
+
+    function applyServerPayload(raw) {
+      const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      itemsData = Array.isArray(parsed && parsed.items) ? parsed.items : [];
+      nextKodeOtomatis = (parsed && parsed.nextKode) || '';
+      updateKodeAutoHint();
+      renderInventaris();
+    }
+
+    async function muatData() {
+      showLoader('Menyinkronkan inventaris Pondok ' + currentPondok + '...');
+      try {
+        const url = GAS_API_URL + '?action=getData&pondok=' + encodeURIComponent(currentPondok);
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        applyServerPayload(data);
+      } catch (err) {
+        alert('Gagal memuat data: ' + err.message);
+      } finally {
+        hideLoader();
+      }
+    }
+
+    async function simpanBarang() {
+      const nama = document.getElementById('namaBarang').value.trim();
+      if (!nama) {
+        showToast('Nama barang wajib diisi!');
+        return;
+      }
+
+      if (fotoBase64 && fotoBase64.length > MAX_SHEET_CELL_CHARS) {
+        showToast('Ukuran foto melebihi batas sel Sheets. Silakan ambil ulang.');
+        return;
+      }
+
+      const payload = {
+        pondok: currentPondok,
+        kode: document.getElementById('kodeBarang').value.trim(),
+        nama: nama,
+        kategori: document.getElementById('kategoriBarang').value,
+        lokasi: document.getElementById('lokasiBarang').value.trim(),
+        baik: Number(document.getElementById('kondisiBaik').value || 0),
+        rusakRingan: Number(document.getElementById('rusakRingan').value || 0),
+        rusakBerat: Number(document.getElementById('rusakBerat').value || 0),
+        jumlahTotal: Number(document.getElementById('jumlahTotal').value || 0),
+        satuan: getSatuanValue(),
+        sumberTahun: document.getElementById('sumberTahun').value.trim(),
+        keterangan: document.getElementById('keteranganBarang').value.trim(),
+        fotoBase64: fotoBase64
+      };
+
+      showLoader('Menyimpan barang (' + currentPondok + ')...');
+      try {
+        const res = await fetch(GAS_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'save', payload: payload })
+        });
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        applyServerPayload(data);
+        resetFormBarang();
+        showToast('Barang berhasil disimpan');
+      } catch (err) {
+        alert('Gagal menyimpan: ' + err.message);
+      } finally {
+        hideLoader();
+      }
+    }
+
+    async function hapusBarang(id) {
+      if (!confirm('Hapus barang ini dari inventaris Pondok ' + currentPondok + '?')) return;
+
+      showLoader('Menghapus barang...');
+      try {
+        const res = await fetch(GAS_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'delete', id: id, pondok: currentPondok })
+        });
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        applyServerPayload(data);
+        showToast('Barang berhasil dihapus');
+      } catch (err) {
+        alert('Gagal menghapus: ' + err.message);
+      } finally {
+        hideLoader();
+      }
+    }
+
+    function setFilterKondisi(mode) {
+      filterKondisi = mode;
+      document.getElementById('kpiBtnAll').classList.toggle('active-filter', mode === 'all');
+      document.getElementById('kpiBtnBaik').classList.toggle('active-filter', mode === 'baik');
+      document.getElementById('kpiBtnRingan').classList.toggle('active-filter', mode === 'ringan');
+      document.getElementById('kpiBtnBerat').classList.toggle('active-filter', mode === 'berat');
+
+      const mapText = {
+        all: 'Filter: Semua Item',
+        baik: 'Filter: Kondisi Baik',
+        ringan: 'Filter: Rusak Ringan',
+        berat: 'Filter: Rusak Berat'
+      };
+      document.getElementById('filterStatusLabel').innerText = mapText[mode] || 'Filter: Semua Item';
+      renderInventaris();
+    }
+
+    function renderInventaris() {
+      const cardList = document.getElementById('invCardList');
+      const printBody = document.getElementById('printTableBody');
+      const keyword = (document.getElementById('searchNamaBarang').value || '').trim().toLowerCase();
+
+      let sumBaik = 0;
+      let sumRR = 0;
+      let sumRB = 0;
+
+      itemsData.forEach(function(item) {
+        sumBaik += Number(item.baik || 0);
+        sumRR += Number(item.rusakRingan || 0);
+        sumRB += Number(item.rusakBerat || 0);
+      });
+
+      document.getElementById('kpiJenis').innerText = itemsData.length;
+      document.getElementById('kpiBaik').innerText = sumBaik;
+      document.getElementById('kpiRingan').innerText = sumRR;
+      document.getElementById('kpiBerat').innerText = sumRB;
+
+      const filtered = itemsData.filter(function(item) {
+        const b = Number(item.baik || 0);
+        const rr = Number(item.rusakRingan || 0);
+        const rb = Number(item.rusakBerat || 0);
+
+        if (filterKondisi === 'baik' && b <= 0) return false;
+        if (filterKondisi === 'ringan' && rr <= 0) return false;
+        if (filterKondisi === 'berat' && rb <= 0) return false;
+
+        if (keyword) {
+          const hay = [
+            item.kode,
+            item.nama,
+            item.kategori,
+            item.lokasi,
+            item.sumberTahun,
+            item.keterangan
+          ].join(' ').toLowerCase();
+          if (hay.indexOf(keyword) === -1) return false;
+        }
+        return true;
+      });
+
+      document.getElementById('countShownLabel').innerText = filtered.length + ' barang';
+
+      if (filtered.length === 0) {
+        cardList.innerHTML = '<div style="text-align:center; padding:16px; color:var(--text-muted); font-size:13px;">Belum ada data barang yang cocok.</div>';
+        printBody.innerHTML = '<tr><td colspan="11" style="text-align:center;">Tidak ada data.</td></tr>';
+        return;
+      }
+
+      cardList.innerHTML = filtered.map(function(item) {
+        const metaParts = [
+          item.kategori,
+          item.lokasi ? 'Lokasi: ' + item.lokasi : '',
+          item.sumberTahun ? 'Sumber/Thn: ' + item.sumberTahun : '',
+          item.keterangan
+        ].filter(Boolean);
+
+        return '<div class="inv-card">' +
+          '<span class="inv-code">' + esc(item.kode || '-') + '</span>' +
+          '<div class="inv-name">' + esc(item.nama || '-') + '</div>' +
+          '<div class="inv-meta">' + esc(metaParts.join(' • ') || '-') + '</div>' +
+          '<div class="inv-badges">' +
+            '<span class="mini-badge">Total: ' + Number(item.jumlahTotal || 0) + ' ' + esc(item.satuan || '') + '</span>' +
+            '<span class="mini-badge ok">Baik: ' + Number(item.baik || 0) + '</span>' +
+            '<span class="mini-badge rr">RR: ' + Number(item.rusakRingan || 0) + '</span>' +
+            '<span class="mini-badge rb">RB: ' + Number(item.rusakBerat || 0) + '</span>' +
+          '</div>' +
+          '<div class="inv-actions">' +
+            (item.fotoBase64
+              ? '<button type="button" class="btn-item-act foto" onclick="lihatFoto(\'' + esc(item.id) + '\')">Lihat Foto</button>'
+              : '') +
+            '<button type="button" class="btn-item-act del" onclick="hapusBarang(\'' + esc(item.id) + '\')">Hapus</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      printBody.innerHTML = filtered.map(function(item, idx) {
+        return '<tr>' +
+          '<td>' + (idx + 1) + '</td>' +
+          '<td>' + esc(item.kode || '-') + '</td>' +
+          '<td>' + esc(item.nama || '-') + '</td>' +
+          '<td>' + esc(item.kategori || '-') + '</td>' +
+          '<td>' + esc(item.lokasi || '-') + '</td>' +
+          '<td>' + Number(item.jumlahTotal || 0) + ' ' + esc(item.satuan || '') + '</td>' +
+          '<td>' + Number(item.baik || 0) + '</td>' +
+          '<td>' + Number(item.rusakRingan || 0) + '</td>' +
+          '<td>' + Number(item.rusakBerat || 0) + '</td>' +
+          '<td>' + esc(item.sumberTahun || '-') + '</td>' +
+          '<td>' + esc(item.keterangan || '-') + '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function esc(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function cetakPDF() {
+      applyPondokLabels();
+      window.print();
+    }
+  </script>
+</body>
+</html>
